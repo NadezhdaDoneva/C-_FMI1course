@@ -1,2 +1,4 @@
 ﻿  ConsoleApplication1.cpp
-  ConsoleApplication1.vcxproj -> D:\FMI\C++_FMIcourse1\C-_FMI1course\exercise 4\ConsoleApplication1\x64\Debug\ConsoleApplication1.exe
+D:\Data\FMI\C++_FMIcourse1\C-_FMI1course\exercise 4\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(156,35): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+D:\Data\FMI\C++_FMIcourse1\C-_FMI1course\exercise 4\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(163,36): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+  ConsoleApplication1.vcxproj -> D:\Data\FMI\C++_FMIcourse1\C-_FMI1course\exercise 4\ConsoleApplication1\x64\Debug\ConsoleApplication1.exe
