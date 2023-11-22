@@ -4,26 +4,27 @@
 #include <iostream>
 using namespace std;
 
-int countDivisors(int number) {
-    int countofDivisors = 0;
-    for (int i = 1; i < sqrt(number); i++)
-    {
-        if (number % i == 0) {
-            if (number / i == i) {
-                
-                countofDivisors++;
-            }
-            else {
-                countofDivisors += 2;
-            }
-        }
-    }
-    return countofDivisors;
-}
+//int countDivisors(int number) {
+//    int countofDivisors = 0;
+//    for (int i = 1; i < sqrt(number); i++)
+//    {
+//        if (number % i == 0) {
+//            if (number / i == i) {
+//                
+//                countofDivisors++;
+//            }
+//            else {
+//                countofDivisors += 2;
+//            }
+//        }
+//    }
+//    return countofDivisors;
+//}
+
 
 int main()
 {
-    int n, k;
+    /*int n, k;
     int countDivisorsX = 0;
     int countDivisorsY = 0;
     int kDxDy = 0;
@@ -55,8 +56,10 @@ int main()
         cout << counterSatisfyingNumbers << endl;
     }
     else {
-        cout << "Please enter positive numbers!";
-    }
+        cout << "Incorrect input";
+    }*/
+
+
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
