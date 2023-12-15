@@ -22,18 +22,19 @@ using namespace std;
 //    return countofDivisors;
 //}
 
-int validation(int n, int s, char c) {
-    if (n > 0 && n < 256 && s>0 && s < 127 /*&& c>'a' && c < 'z'*/) {
-        return 0;
-    }
-    else if (n <= 0) {
-        return -1;
-    }
-    else {
-        return 1;
-    }
-    
-}
+//zad3
+//int validation(int n, int s, char c) {
+//    if (n > 0 && n < 256 && s>0 && s < 127 /*&& c>'a' && c < 'z'*/) {
+//        return 0;
+//    }
+//    else if (n <= 0) {
+//        return -1;
+//    }
+//    else {
+//        return 1;
+//    }
+//    
+//}
 
 
 
@@ -76,99 +77,134 @@ int main()
     }*/
 
     //zad3
-    int n;
-    int s;
-    //validate n
-    char colorsBallsArr[256];
-    cout << "Please enter number of balls: " << endl;
-    cin >> n;
+    //int n;
+    //int s;
+    ////validate n
+    //char colorsBallsArr[256];
+    //cout << "Please enter number of balls: " << endl;
+    //cin >> n;
 
-    cout << "Please enter ball's colors: " << endl;
-    for (int i = 0; i < n; i++)
-    {
-        char tempBallColor;
-        cin >> tempBallColor;
-        colorsBallsArr[i] = tempBallColor;
-    }
+    //cout << "Please enter ball's colors: " << endl;
+    //for (int i = 0; i < n; i++)
+    //{
+    //    char tempBallColor;
+    //    cin >> tempBallColor;
+    //    colorsBallsArr[i] = tempBallColor;
+    //}
 
-    cout << "Please enter number of shots: " << endl;
-    cin >> s;
+    //cout << "Please enter number of shots: " << endl;
+    //cin >> s;
 
-    for (int j = 0; j < s; j++)
-    {
-        int i;
-        cout << "Please enter the index of the ball you want to hit: " << endl;
-        cin >> i;
+    //for (int j = 0; j < s; j++)
+    //{
+    //    int i;
+    //    cout << "Please enter the index of the ball you want to hit: " << endl;
+    //    cin >> i;
 
-        char c;
-        cout << "Please enter the color of the shooting ball: " << endl;
-        cin >> c;
+    //    char c;
+    //    cout << "Please enter the color of the shooting ball: " << endl;
+    //    cin >> c;
 
-        if (validation)
+    //    if (validation)
+    //    {
+    //        //inserting a ball into the array
+    //        n++;
+    //        for (int k = n; k > i; k--)
+    //        {
+    //            colorsBallsArr[k] = colorsBallsArr[k - 1];
+    //        }
+    //        colorsBallsArr[i + 1] = c;
+
+    //        //check if there are three consiquent one colored balls
+    //        /*bool isThreeEquals = false;
+    //        if (colorsBallsArr[i+1]==colorsBallsArr[i+2])
+    //        {
+    //            if (colorsBallsArr[i+1] == colorsBallsArr[i + 3] || colorsBallsArr[i + 1] == colorsBallsArr[i]) {
+    //                isThreeEquals = true;
+    //            }
+    //        }
+    //        else if (colorsBallsArr[i + 1] == colorsBallsArr[i]) {
+    //            if (colorsBallsArr[i] == colorsBallsArr[i-1])
+    //            {
+    //                isThreeEquals == true;
+
+    //            }
+    //        }*/
+
+
+    //        /*for (int k = i; colorsBallsArr[k] = colorsBallsArr[k+1]; k++)
+    //        {
+    //            colorsBallsArr[k] = colorsBallsArr[k + 1];
+    //        }
+    //        for (int k = i; colorsBallsArr[k] = colorsBallsArr[k + 1]; k--)
+    //        {
+    //            colorsBallsArr[k] = colorsBallsArr[k -1];
+    //        }*/
+    //        
+    //        /*for (int k = 0; k < n; k++)
+    //        {
+    //            int temp = k;
+    //            int count = 0;
+    //            while (k + 1 < n && colorsBallsArr[k] == colorsBallsArr[k + 1]) {
+    //                count++;
+    //                k++;
+    //            }
+
+    //            if (count >= 3) {
+
+    //                for (int j = temp; j < n; j++) {
+    //                    while (count > 0)
+    //                    {
+    //                        colorsBallsArr[j] = colorsBallsArr[j + 1];
+    //                        count--;
+    //                    }
+    //                }
+    //            }
+
+    //        }*/
+    //        
+    //    }
+    //    else {
+    //        cout << "Incorrect input";
+    //    }
+    //}
+    //cout << colorsBallsArr;
+
+//zad2
+int countOfPeople = 0;
+int questionedPeopleCount;
+cin >> questionedPeopleCount;
+int arr[1000];
+//validate questinedPeopleCount
+
+for (int i = 0; i < questionedPeopleCount; i++)
+{
+    int tempAnswer;
+    cin >> tempAnswer;
+    arr[i] = tempAnswer;
+}
+
+for (int i = 0; i < questionedPeopleCount; i++)
+{
+    bool isRepeated = false;
+    int countOfRepeatedAnswers = 0;
+    for (int j = 0; i < questionedPeopleCount; i++) {
+        if (arr[i]==arr[j])
         {
-            //inserting a ball into the array
-            n++;
-            for (int k = n; k > i; k--)
-            {
-                colorsBallsArr[k] = colorsBallsArr[k - 1];
-            }
-            colorsBallsArr[i + 1] = c;
-
-            //check if there are three consiquent one colored balls
-            /*bool isThreeEquals = false;
-            if (colorsBallsArr[i+1]==colorsBallsArr[i+2])
-            {
-                if (colorsBallsArr[i+1] == colorsBallsArr[i + 3] || colorsBallsArr[i + 1] == colorsBallsArr[i]) {
-                    isThreeEquals = true;
-                }
-            }
-            else if (colorsBallsArr[i + 1] == colorsBallsArr[i]) {
-                if (colorsBallsArr[i] == colorsBallsArr[i-1])
-                {
-                    isThreeEquals == true;
-
-                }
-            }*/
-
-
-            /*for (int k = i; colorsBallsArr[k] = colorsBallsArr[k+1]; k++)
-            {
-                colorsBallsArr[k] = colorsBallsArr[k + 1];
-            }
-            for (int k = i; colorsBallsArr[k] = colorsBallsArr[k + 1]; k--)
-            {
-                colorsBallsArr[k] = colorsBallsArr[k -1];
-            }*/
-            
-            /*for (int k = 0; k < n; k++)
-            {
-                int temp = k;
-                int count = 0;
-                while (k + 1 < n && colorsBallsArr[k] == colorsBallsArr[k + 1]) {
-                    count++;
-                    k++;
-                }
-
-                if (count >= 3) {
-
-                    for (int j = temp; j < n; j++) {
-                        while (count > 0)
-                        {
-                            colorsBallsArr[j] = colorsBallsArr[j + 1];
-                            count--;
-                        }
-                    }
-                }
-
-            }*/
-            
-        }
-        else {
-            cout << "Incorrect input";
+            countOfRepeatedAnswers++;
+            isRepeated = true;
         }
     }
-    cout << colorsBallsArr;
-
+    if (countOfRepeatedAnswers>arr[i] && isRepeated)
+    {
+        countOfPeople += arr[i];
+    }
+    if (!isRepeated)
+    {
+        countOfPeople += arr[i];
+    }
+}
+cout << countOfPeople;
 
 
 }
