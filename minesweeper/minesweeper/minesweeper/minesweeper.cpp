@@ -197,8 +197,31 @@ void replaceMine(int x, int y, char realBoard[10][10], size_t boardDimension) {
     return;
 }
 
-void openAllNeighbours(char realBoard[10][10], char playerBoard[10][10], int xMove, int yMove, size_t boardDimensio) {
-
+//open all fields next to zeroes
+void openAllNeighbours(char realBoard[10][10], char playerBoard[10][10], int xMove, int yMove, size_t boardDimension) {
+    if (realBoard[xMove][yMove] != '0')
+    {
+        playerBoard[xMove][yMove] == realBoard[xMove][yMove];
+    }
+    for (int i = xMove - 1; i <= xMove + 1; i++)
+    {
+        for (int j = yMove - 1; j <= yMove + 1; j++) {
+            if (i >= 0 && j >= 0 && i < boardDimension && j < boardDimension)
+            {
+                if (i == xMove && j == yMove)
+                {
+                    continue;
+                }
+                else {
+                    if (playerBoard[i][j] == '-' && realBoard[i][j] != '*' && realBoard[i][j] == '0')
+                    {
+                        playerBoard[i][j] = realBoard[i][j];
+                        openAllNeighbours(realBoard, playerBoard, i, j, boardDimension);
+                    }
+                }
+            }
+        }
+    }
 }
 
 //open field functionality
