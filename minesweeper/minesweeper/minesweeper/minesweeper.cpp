@@ -17,6 +17,7 @@ bool validationOfInput(size_t boardDimension, unsigned minesCount) {
     }
 }
 
+//user enters dimensions and minesCount
 void customizeSettings(size_t& boardDimension, unsigned& minesCount) {
     cout << "Enter board dimensions: ";
     cin >> boardDimension;
@@ -45,6 +46,7 @@ bool isRepeatedMine(int minesCoordinatesArr[30][2], int& x, int& y, unsigned min
     return false;
 }
 
+//place mines on random coordinates
 void placeMinesRandomly(char realBoard[10][10], int minesCoordinatesArr[30][2], unsigned minesCount, size_t boardDimension) {
     srand(time(0));
     int x = 0;
@@ -54,14 +56,12 @@ void placeMinesRandomly(char realBoard[10][10], int minesCoordinatesArr[30][2], 
     {
         x = rand() % boardDimension;
         y = rand() % boardDimension;
-        x = 2;
-        y = 2;
+        //check for repeated coordinates and change them if needed
         while (isRepeatedMine(minesCoordinatesArr, x, y, minesCount))
         {
             x = rand() % boardDimension;
             y = rand() % boardDimension;
         }
-        cout << x << y << endl;
         minesCoordinatesArr[i][0] = x;
         minesCoordinatesArr[i][1] = y;
         realBoard[x][y] = '*';
