@@ -6,6 +6,7 @@
 #include <time.h> 
 using namespace std;
 
+// validate user input of dimensions and mines count
 bool validationOfInput(size_t boardDimension, unsigned minesCount) {
     int maxMines = 3 * boardDimension;
     if (boardDimension >= 3 && boardDimension <= 10 && minesCount >= 1 && minesCount <= maxMines)
@@ -34,7 +35,7 @@ void customizeSettings(size_t& boardDimension, unsigned& minesCount) {
     }
 }
 
-//check if mine with the same coordinates is already generated
+//check if mine with the same coordinates is already generated during random generation
 bool isRepeatedMine(/*int minesCoordinatesArr[30][2],*/char realBoard[10][10], int x, int y, unsigned minesCount) {
         if (realBoard[x][y] == '*')
         {
@@ -65,6 +66,7 @@ void placeMinesRandomly(char realBoard[10][10], /*int minesCoordinatesArr[30][2]
     }
 }
 
+//creates realBoard (ivisible board witch holds all the info) and playerBoard (the board with witch the player communicates with)
 void createBoard(char realBoard[10][10], char playerBoard[10][10], size_t boardDimension, unsigned minesCount /*int minesCoordinatesArr[30][2]*/) {
     for (int i = 0; i < boardDimension; i++)
     {
@@ -89,26 +91,47 @@ void printPlayerBoard(char playerBoard[10][10], size_t boardDimension) {
     cout << endl;
 }
 
-bool areValidInputCoordinates(int const x, int const y, size_t boardDimension) {
-    if (x >= 0 && x <= boardDimension && y >= 0 && y <= boardDimension)
+//check if two strings are equal
+int strCompare(const char* first, const char* second)
+{
+    if (first == nullptr || second == nullptr)
+        return -2;
+    while (*first != '\0' && *second != '\0')
+    {
+        if (*first < *second)
+            return -1;
+        if (*first > *second)
+            return 1;
+        first++;
+        second++;
+    }
+    if (*first == '\0' && *second == '\0')
+        return 0;
+    return *first == '\0' ? -1 : 1;
+}
+
+//user input checked if valid
+bool areValidInputCoordinatesAndOperation(int const x, int const y, char const operation[7], size_t boardDimension) {
+    if (x >= 0 && x <= boardDimension && y >= 0 && y <= boardDimension 
+        && (strCompare(operation, "open") == 0 || strCompare(operation, "mark") == 0 || strCompare(operation, "unmark") == 0))
     {
         return true;
     }
     return false;
 }
 
-void makeMove(int& x, int& y, size_t boardDimension) {
-    cout << "Enter the coordinates of the cell you want to open: " << endl;
-    cin >> x;
-    cin >> y;
-    while (!areValidInputCoordinates(x, y, boardDimension))
+//the user enters command and coordinates
+void makeMove(int& x, int& y, char operation[7], size_t boardDimension) {
+    cout << "Enter operation (mark, unmark, open): " << endl;
+    cin >> operation >> x >> y;
+    while (!areValidInputCoordinatesAndOperation(x, y, operation, boardDimension))
     {
-        cout << "Please enter valid coordinates: " << endl;
-        cin >> x;
-        cin >> y;
+        cout << "Please enter valid coordinates and command: " << endl;
+        cin >> operation >> x >> y;
     }
 }
 
+//check is a field is a mine
 bool isMine(int x, int y, char realBoard[10][10], size_t boardDimension) {
     if (realBoard[x][y] == '*')
     {
@@ -117,6 +140,7 @@ bool isMine(int x, int y, char realBoard[10][10], size_t boardDimension) {
     return false;
 }
 
+// if a mine is hit on the first move we change the coordinates of the mine to the first non-mine field
 void replaceMine(int x, int y, char realBoard[10][10], size_t boardDimension) {
     for (size_t i = 0; i < boardDimension; i++)
     {
@@ -125,9 +149,22 @@ void replaceMine(int x, int y, char realBoard[10][10], size_t boardDimension) {
             {
                 realBoard[i][j] = '*';
                 realBoard[x][y] = '-';
+                return;
             }
         }
     }
+    return;
+}
+
+//recursive function for playing minesweeper
+bool playMinesweeperUntil(char realBoard[10][10], char playerBoard[10][10], unsigned minesCount, int xMove, int yMove, unsigned movesLeft) {
+    //base of recursion
+    if (realBoard[xMove][yMove] == '*')
+    {
+        return true;
+    }
+
+
 }
 
 void playMinesweeper(char realBoard[10][10], char playerBoard[10][10], size_t boardDimension, unsigned minesCount) {
@@ -140,8 +177,9 @@ void playMinesweeper(char realBoard[10][10], char playerBoard[10][10], size_t bo
     while (!gameOver)
     {
         printPlayerBoard(playerBoard, boardDimension);
+        char operation[7];
         int xMove, yMove;
-        makeMove(xMove, yMove, boardDimension);
+        makeMove(xMove, yMove, operation, boardDimension);
 
         if (currentMove == 0)
         {
@@ -150,7 +188,16 @@ void playMinesweeper(char realBoard[10][10], char playerBoard[10][10], size_t bo
             }
         }
         
+        currentMove++;
+        gameOver = playMinesweeperUntil(realBoard, playerBoard, minesCount, xMove, yMove, movesLeft);
+
+        if (!gameOver && (movesLeft == 0))
+        {
+            cout << "Victory!";
+            gameOver = true;
+        }
     }
+    return;
 }
 
 int main()
@@ -161,6 +208,5 @@ int main()
     char realBoard[10][10];
     char playerBoard[10][10];
     playMinesweeper(realBoard, playerBoard, boardDimension, minesCount);
-
 }
 
