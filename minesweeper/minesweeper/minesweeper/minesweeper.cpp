@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cstdlib>;
 #include <time.h> 
+#include <iomanip>
 using namespace std;
 
 // validate user input of dimensions and mines count
@@ -99,18 +100,29 @@ void placeMinesRandomly(char realBoard[10][10], unsigned minesCount, size_t boar
             x = rand() % boardDimension;
             y = rand() % boardDimension;
         }
-        //DELETE:
-        cout << x << y << endl;
         realBoard[x][y] = '*';
     }
     countOfminesInNeighbouringFields(realBoard, boardDimension);
 }
 
 void printPlayerBoard(char playerBoard[10][10], size_t boardDimension) {
+    cout << " #|";
     for (size_t i = 0; i < boardDimension; i++)
     {
+        cout << setw(4) << i;
+    }
+    cout << endl;
+    cout << "   ";
+    for (size_t i = 0; i < boardDimension*2; i++)
+    {
+        cout << setw(2) << '_';
+    }
+    cout << endl;
+    for (size_t i = 0; i < boardDimension; i++)
+    {
+        cout << setw(2) << i << "|";
         for (size_t j = 0; j < boardDimension; j++) {
-            cout << playerBoard[i][j] << " ";
+            cout << setw(4) << playerBoard[i][j];
         }
         cout << endl;
     }
@@ -326,7 +338,7 @@ void playMinesweeper(char realBoard[10][10], char playerBoard[10][10], size_t bo
 
         if (!gameOver && (movesLeft == 0))
         {
-            cout << "Victory!";
+            cout << "VICTORY!";
             gameOver = true;
         }
     }
