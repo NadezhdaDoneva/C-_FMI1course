@@ -40,7 +40,7 @@ void customizeSettings(size_t& boardDimension, unsigned& minesCount) {
 }
 
 //check if mine with the same coordinates is already generated during random generation
-bool isRepeatedMine(/*int minesCoordinatesArr[30][2],*/char realBoard[10][10], int x, int y, unsigned minesCount) {
+bool isRepeatedMine(char realBoard[10][10], int x, int y, unsigned minesCount) {
         if (realBoard[x][y] == '*')
         {
             return true;
@@ -84,7 +84,7 @@ void countOfminesInNeighbouringFields(char realBoard[10][10], size_t boardDimens
 }
 
 //place mines on random coordinates
-void placeMinesRandomly(char realBoard[10][10], /*int minesCoordinatesArr[30][2],*/ unsigned minesCount, size_t boardDimension) {
+void placeMinesRandomly(char realBoard[10][10], unsigned minesCount, size_t boardDimension) {
     srand(time(0));
     int x = 0;
     int y = 0;
@@ -94,13 +94,11 @@ void placeMinesRandomly(char realBoard[10][10], /*int minesCoordinatesArr[30][2]
         x = rand() % boardDimension;
         y = rand() % boardDimension;
         //check for repeated coordinates and change them if needed
-        while (isRepeatedMine(/*minesCoordinatesArr*/realBoard, x, y, minesCount))
+        while (isRepeatedMine(realBoard, x, y, minesCount))
         {
             x = rand() % boardDimension;
             y = rand() % boardDimension;
         }
-        //minesCoordinatesArr[i][0] = x;
-        //minesCoordinatesArr[i][1] = y;
         //DELETE:
         cout << x << y << endl;
         realBoard[x][y] = '*';
@@ -120,7 +118,7 @@ void printPlayerBoard(char playerBoard[10][10], size_t boardDimension) {
 }
 
 //creates realBoard (ivisible board witch holds all the info) and playerBoard (the board with witch the player communicates with)
-void createBoard(char realBoard[10][10], char playerBoard[10][10], size_t boardDimension, unsigned minesCount /*int minesCoordinatesArr[30][2]*/) {
+void createBoard(char realBoard[10][10], char playerBoard[10][10], size_t boardDimension, unsigned minesCount) {
     for (int i = 0; i < boardDimension; i++)
     {
         for (int j = 0; j < boardDimension; j++)
@@ -129,7 +127,7 @@ void createBoard(char realBoard[10][10], char playerBoard[10][10], size_t boardD
             playerBoard[i][j] = '-';
         }
     }
-    placeMinesRandomly(realBoard, /*minesCoordinatesArr*/ minesCount, boardDimension);
+    placeMinesRandomly(realBoard, minesCount, boardDimension);
     //DELETE:
     printPlayerBoard(realBoard, boardDimension);
 }
@@ -174,7 +172,7 @@ void makeMove(int& x, int& y, char operation[7], size_t boardDimension) {
     }
 }
 
-//check is a field is a mine
+//check if a field is a mine
 bool isMine(int x, int y, char realBoard[10][10], size_t boardDimension) {
     if (realBoard[x][y] == '*')
     {
@@ -198,17 +196,6 @@ void replaceMine(int x, int y, char realBoard[10][10], size_t boardDimension) {
     }
     return;
 }
-
-//recursive function for playing minesweeper
-//bool playMinesweeperUntil(char realBoard[10][10], char playerBoard[10][10], unsigned minesCount, int xMove, int yMove, unsigned movesLeft) {
-//    //base of recursion
-//    if (realBoard[xMove][yMove] == '*')
-//    {
-//        return true;
-//    }
-//
-//
-//}
 
 void openAllNeighbours(char realBoard[10][10], char playerBoard[10][10], int xMove, int yMove, size_t boardDimensio) {
 
@@ -279,9 +266,8 @@ void unmarkField(char playerBoard[10][10], int xMove, int yMove) {
 }
 
 void playMinesweeper(char realBoard[10][10], char playerBoard[10][10], size_t boardDimension, unsigned minesCount) {
-    //int minesCoordinatesArr[30][2];
     int movesLeft = boardDimension * boardDimension - minesCount;
-    createBoard(realBoard, playerBoard, boardDimension, minesCount /*minesCoordinatesArr*/);
+    createBoard(realBoard, playerBoard, boardDimension, minesCount);
     bool gameOver = false;
     int currentMove = 0;
 
@@ -324,10 +310,21 @@ void playMinesweeper(char realBoard[10][10], char playerBoard[10][10], size_t bo
     return;
 }
 
+void rules() {
+    cout << "RULES:" << endl << endl;
+    cout << "1. Firstly, the player should enter the board DIMENSIONS and the COUNT of all MINES." << endl;
+    cout << "2. The game starts and the player should ener a command OPEN, MARK, UNMARK and COORDINATES of a cell." << endl;
+    cout << "3. If the player hits a mine - he loses the game." << endl;
+    cout << "4. Victory - when all fields with numbers are opened." << endl;
+    cout << "5. * : mine; ? : marked; - : starting value of every field" << endl << endl << endl;
+}
+
+
 int main()
 {
     size_t boardDimension = 0;
     unsigned minesCount = 0;
+    rules();
     customizeSettings(boardDimension, minesCount);
     char realBoard[10][10];
     char playerBoard[10][10];
