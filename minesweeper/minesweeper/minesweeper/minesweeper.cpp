@@ -44,6 +44,41 @@ bool isRepeatedMine(/*int minesCoordinatesArr[30][2],*/char realBoard[10][10], i
     return false;
 }
 
+void countOfMinesAroundCurrField(char realBoard[10][10], size_t boardDimension, int i, int j) {
+    char countMinesAround = '0';
+    for (int k = i-1; k <= i + 1; k++)
+    {
+        for (int l = j - 1; l <= j + 1; l++) {
+            if (k >= 0 && l >= 0 && k < boardDimension && l < boardDimension)
+            {
+                if (i == k && j == l)
+                {
+                    continue;
+                }
+                else {
+                    if (realBoard[k][l] == '*')
+                    {
+                        countMinesAround++;
+                    }
+                }
+            }
+        }
+    }
+    realBoard[i][j] = countMinesAround;
+}
+
+void countOfminesInNeighbouringFields(char realBoard[10][10], size_t boardDimension) {
+    for (int i = 0; i < boardDimension; i++)
+    {
+        for (int j = 0; j < boardDimension; j++)
+        {
+            if (realBoard[i][j] != '*') {
+                countOfMinesAroundCurrField(realBoard, boardDimension, i, j);
+            }
+        }
+    }
+}
+
 //place mines on random coordinates
 void placeMinesRandomly(char realBoard[10][10], /*int minesCoordinatesArr[30][2],*/ unsigned minesCount, size_t boardDimension) {
     srand(time(0));
@@ -62,8 +97,23 @@ void placeMinesRandomly(char realBoard[10][10], /*int minesCoordinatesArr[30][2]
         }
         //minesCoordinatesArr[i][0] = x;
         //minesCoordinatesArr[i][1] = y;
+        //DELETE:
+        cout << x << y << endl;
         realBoard[x][y] = '*';
     }
+    countOfminesInNeighbouringFields(realBoard, boardDimension);
+}
+
+void printPlayerBoard(char playerBoard[10][10], size_t boardDimension) {
+    cout << "Current board status: " << endl;
+    for (size_t i = 0; i < boardDimension; i++)
+    {
+        for (size_t j = 0; j < boardDimension; j++) {
+            cout << playerBoard[i][j] << " ";
+        }
+        cout << endl;
+    }
+    cout << endl;
 }
 
 //creates realBoard (ivisible board witch holds all the info) and playerBoard (the board with witch the player communicates with)
@@ -77,18 +127,8 @@ void createBoard(char realBoard[10][10], char playerBoard[10][10], size_t boardD
         }
     }
     placeMinesRandomly(realBoard, /*minesCoordinatesArr*/ minesCount, boardDimension);
-}
-
-void printPlayerBoard(char playerBoard[10][10], size_t boardDimension) {
-    cout << "Current board status: " << endl;
-    for (size_t i = 0; i < boardDimension; i++)
-    {
-        for (size_t j = 0; j < boardDimension; j++) {
-            cout << playerBoard[i][j] << " ";
-        }
-        cout << endl;
-    }
-    cout << endl;
+    //DELETE:
+    printPlayerBoard(realBoard, boardDimension);
 }
 
 //check if two strings are equal
@@ -167,6 +207,37 @@ bool playMinesweeperUntil(char realBoard[10][10], char playerBoard[10][10], unsi
 
 }
 
+void openAllNeighbours(char realBoard[10][10], char playerBoard[10][10], int xMove, int yMove, size_t boardDimensio) {
+
+}
+
+void openField(char realBoard[10][10], char playerBoard[10][10], int xMove, int yMove, bool& gameOver, size_t boardDimension, unsigned movesLeft) {
+    if (playerBoard[xMove][yMove] == '!')
+    {
+        cout << "The field is marked! Unmark before opening it";
+    }
+    else if (playerBoard[xMove][yMove] != '-')
+    {
+        cout << "The field has already been opened";
+    }
+    else {
+        if (realBoard[xMove][yMove] == '*')
+        {
+            gameOver = true;
+            cout << "You hit a mine" << endl;
+            printPlayerBoard(realBoard, boardDimension);
+        }
+        else if(realBoard[xMove][yMove] != '0')
+        {
+            playerBoard[xMove][yMove] = realBoard[xMove][yMove];
+            movesLeft--;
+        }
+        else {
+            openAllNeighbours(realBoard, playerBoard, xMove, yMove, boardDimension);
+        }
+    }
+}
+
 void playMinesweeper(char realBoard[10][10], char playerBoard[10][10], size_t boardDimension, unsigned minesCount) {
     //int minesCoordinatesArr[30][2];
     unsigned movesLeft = boardDimension * boardDimension - minesCount;
@@ -189,8 +260,17 @@ void playMinesweeper(char realBoard[10][10], char playerBoard[10][10], size_t bo
         }
         
         currentMove++;
-        gameOver = playMinesweeperUntil(realBoard, playerBoard, minesCount, xMove, yMove, movesLeft);
+        /*gameOver = playMinesweeperUntil(realBoard, playerBoard, minesCount, xMove, yMove, movesLeft);*/
+        if (strCompare(operation, "open") == 0)
+        {
+            openField(realBoard, playerBoard, xMove, yMove, gameOver, boardDimension, movesLeft);
+        }
+        else if(strCompare(operation, "mark") == 0) {
 
+        }
+        else if (strCompare(operation, "unmark") == 0) {
+
+        }
         if (!gameOver && (movesLeft == 0))
         {
             cout << "Victory!";
