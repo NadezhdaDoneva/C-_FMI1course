@@ -105,7 +105,6 @@ void placeMinesRandomly(char realBoard[10][10], /*int minesCoordinatesArr[30][2]
 }
 
 void printPlayerBoard(char playerBoard[10][10], size_t boardDimension) {
-    cout << "Current board status: " << endl;
     for (size_t i = 0; i < boardDimension; i++)
     {
         for (size_t j = 0; j < boardDimension; j++) {
@@ -162,7 +161,7 @@ bool areValidInputCoordinatesAndOperation(int const x, int const y, char const o
 
 //the user enters command and coordinates
 void makeMove(int& x, int& y, char operation[7], size_t boardDimension) {
-    cout << "Enter operation (mark, unmark, open): " << endl;
+    cout << "Enter operation (mark, unmark, open) and coordinates: " << endl;
     cin >> operation >> x >> y;
     while (!areValidInputCoordinatesAndOperation(x, y, operation, boardDimension))
     {
@@ -211,20 +210,20 @@ void openAllNeighbours(char realBoard[10][10], char playerBoard[10][10], int xMo
 
 }
 
-void openField(char realBoard[10][10], char playerBoard[10][10], int xMove, int yMove, bool& gameOver, size_t boardDimension, unsigned movesLeft) {
+void openField(char realBoard[10][10], char playerBoard[10][10], int xMove, int yMove, bool& gameOver, size_t boardDimension, int& movesLeft) {
     if (playerBoard[xMove][yMove] == '!')
     {
-        cout << "The field is marked! Unmark before opening it";
+        cout << "The field is marked! Unmark before opening it. " << endl;
     }
     else if (playerBoard[xMove][yMove] != '-')
     {
-        cout << "The field has already been opened";
+        cout << "The field has already been opened. " << endl;
     }
     else {
         if (realBoard[xMove][yMove] == '*')
         {
             gameOver = true;
-            cout << "You hit a mine" << endl;
+            cout << "You hit a mine! Game over!" << endl;
             printPlayerBoard(realBoard, boardDimension);
         }
         else if(realBoard[xMove][yMove] != '0')
@@ -238,35 +237,54 @@ void openField(char realBoard[10][10], char playerBoard[10][10], int xMove, int 
     }
 }
 
+void markField(char realBoard[10][10], char playerBoard[10][10], int xMove, int yMove, bool& gameOver, size_t boardDimension, int movesLeft) {
+    //check if already marked
+    if (playerBoard[xMove][yMove] == '?')
+    {
+        cout << "This field is already marked." << endl;
+    }
+    //check if opened
+    else if (playerBoard[xMove][yMove] != '-')
+    {
+        cout << "This field has been opened." << endl;
+    }
+    //otherwise mark field
+    else {
+        playerBoard[xMove][yMove] = '?';
+    }
+}
+
 void playMinesweeper(char realBoard[10][10], char playerBoard[10][10], size_t boardDimension, unsigned minesCount) {
     //int minesCoordinatesArr[30][2];
-    unsigned movesLeft = boardDimension * boardDimension - minesCount;
+    int movesLeft = boardDimension * boardDimension - minesCount;
     createBoard(realBoard, playerBoard, boardDimension, minesCount /*minesCoordinatesArr*/);
     bool gameOver = false;
     int currentMove = 0;
 
     while (!gameOver)
     {
+        cout << "Current board status: " << endl;
         printPlayerBoard(playerBoard, boardDimension);
         char operation[7];
         int xMove, yMove;
         makeMove(xMove, yMove, operation, boardDimension);
 
+        //if it`s the first move, player should never lose, so if he hits a mine, we move the mine somewhere else and 
+        //again count the mines around every field
         if (currentMove == 0)
         {
             if (isMine(xMove, yMove, realBoard, boardDimension)) {
                 replaceMine(xMove, yMove, realBoard, boardDimension);
+                countOfminesInNeighbouringFields(realBoard, boardDimension);
             }
         }
-        
         currentMove++;
-        /*gameOver = playMinesweeperUntil(realBoard, playerBoard, minesCount, xMove, yMove, movesLeft);*/
         if (strCompare(operation, "open") == 0)
         {
             openField(realBoard, playerBoard, xMove, yMove, gameOver, boardDimension, movesLeft);
         }
         else if(strCompare(operation, "mark") == 0) {
-
+            markField(realBoard, playerBoard, xMove, yMove, gameOver, boardDimension, movesLeft);
         }
         else if (strCompare(operation, "unmark") == 0) {
 
