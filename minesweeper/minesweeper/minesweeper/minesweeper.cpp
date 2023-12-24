@@ -200,20 +200,21 @@ void replaceMine(int x, int y, char realBoard[10][10], size_t boardDimension) {
 }
 
 //recursive function for playing minesweeper
-bool playMinesweeperUntil(char realBoard[10][10], char playerBoard[10][10], unsigned minesCount, int xMove, int yMove, unsigned movesLeft) {
-    //base of recursion
-    if (realBoard[xMove][yMove] == '*')
-    {
-        return true;
-    }
-
-
-}
+//bool playMinesweeperUntil(char realBoard[10][10], char playerBoard[10][10], unsigned minesCount, int xMove, int yMove, unsigned movesLeft) {
+//    //base of recursion
+//    if (realBoard[xMove][yMove] == '*')
+//    {
+//        return true;
+//    }
+//
+//
+//}
 
 void openAllNeighbours(char realBoard[10][10], char playerBoard[10][10], int xMove, int yMove, size_t boardDimensio) {
 
 }
 
+//open field functionality
 void openField(char realBoard[10][10], char playerBoard[10][10], int xMove, int yMove, bool& gameOver, size_t boardDimension, int& movesLeft) {
     if (playerBoard[xMove][yMove] == '!')
     {
@@ -241,7 +242,8 @@ void openField(char realBoard[10][10], char playerBoard[10][10], int xMove, int 
     }
 }
 
-void markField(char realBoard[10][10], char playerBoard[10][10], int xMove, int yMove, bool& gameOver, size_t boardDimension, int movesLeft) {
+//mark field functionality
+void markField(char playerBoard[10][10], int xMove, int yMove) {
     //check if already marked
     if (playerBoard[xMove][yMove] == '?')
     {
@@ -255,6 +257,24 @@ void markField(char realBoard[10][10], char playerBoard[10][10], int xMove, int 
     //otherwise mark field
     else {
         playerBoard[xMove][yMove] = '?';
+    }
+}
+
+//unmark field functionality
+void unmarkField(char playerBoard[10][10], int xMove, int yMove) {
+    //check if it is already opened
+    if (playerBoard[xMove][yMove] != '-' && playerBoard[xMove][yMove] != '?')
+    {
+        cout << "You can`t unmark already opened field." << endl;
+    }
+    //check if it`s not marked
+    else if (playerBoard[xMove][yMove] != '?')
+    {
+        cout << "You can`t unmark a field, which has not been marked first." << endl;
+    }
+    //otherwise unmark
+    else {
+        playerBoard[xMove][yMove] = '-';
     }
 }
 
@@ -283,16 +303,18 @@ void playMinesweeper(char realBoard[10][10], char playerBoard[10][10], size_t bo
             }
         }
         currentMove++;
+
         if (strCompare(operation, "open") == 0)
         {
             openField(realBoard, playerBoard, xMove, yMove, gameOver, boardDimension, movesLeft);
         }
         else if(strCompare(operation, "mark") == 0) {
-            markField(realBoard, playerBoard, xMove, yMove, gameOver, boardDimension, movesLeft);
+            markField(playerBoard, xMove, yMove);
         }
         else if (strCompare(operation, "unmark") == 0) {
-
+            unmarkField(playerBoard, xMove, yMove);
         }
+
         if (!gameOver && (movesLeft == 0))
         {
             cout << "Victory!";
