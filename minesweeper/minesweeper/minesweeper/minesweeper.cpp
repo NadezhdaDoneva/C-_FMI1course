@@ -11,6 +11,10 @@ bool validationOfInput(size_t boardDimension, unsigned minesCount) {
     int maxMines = 3 * boardDimension;
     if (boardDimension >= 3 && boardDimension <= 10 && minesCount >= 1 && minesCount <= maxMines)
     {
+        if (boardDimension==3 && minesCount > 7)
+        {
+            return 0;
+        }
         return 1;
     }
     else {
