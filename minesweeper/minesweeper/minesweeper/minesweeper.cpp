@@ -1,5 +1,21 @@
 // minesweeper.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
+/**
+*
+* Solution to course project #5 Minesweeper
+* Introduction to programming course
+* Faculty of Mathematics and Informatics of Sofia University
+* Winter semester 2023/2024
+*
+* @author Nadezhda Doneva
+* @idnumber 2MI0600333
+* @compiler VC
+*
+* Minesweeper game code
+*
+*/
+
+
 
 #include <iostream>
 #include <cstdlib>;
@@ -238,7 +254,7 @@ void openAllNeighbours(char realBoard[10][10], char playerBoard[10][10], int xMo
 
 //open field functionality
 void openField(char realBoard[10][10], char playerBoard[10][10], int xMove, int yMove, bool& gameOver, size_t boardDimension, int& movesLeft) {
-    if (playerBoard[xMove][yMove] == '!')
+    if (playerBoard[xMove][yMove] == '?')
     {
         cout << "The field is marked! Unmark before opening it. " << endl;
     }
@@ -348,7 +364,7 @@ void playMinesweeper(char realBoard[10][10], char playerBoard[10][10], size_t bo
 void rules() {
     cout << "RULES:" << endl << endl;
     cout << "1. Firstly, the player should enter the board DIMENSIONS and the COUNT of all MINES." << endl;
-    cout << "2. The game starts and the player should ener a command OPEN, MARK, UNMARK and COORDINATES of a cell." << endl;
+    cout << "2. The game starts and the player should enter a command OPEN, MARK, UNMARK and COORDINATES of a cell." << endl;
     cout << "3. If the player hits a mine - he loses the game." << endl;
     cout << "4. Victory - when all fields with numbers are opened." << endl;
     cout << "5. * : mine; ? : marked; - : starting value of every field" << endl << endl << endl;
