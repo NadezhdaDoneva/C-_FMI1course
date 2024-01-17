@@ -23,10 +23,14 @@
 #include <iomanip>
 using namespace std;
 
+constexpr int MAX_SIZE_BOARD = 10;
+constexpr int MAX_STR_SIZE = 7;
+constexpr int MIN_SIZE_BOARD = 3;
+
 // validate user input of dimensions and mines count
 bool validationOfInput(size_t boardDimension, const unsigned minesCount) {
     int maxMines = 3 * boardDimension;
-    if (boardDimension >= 3 && boardDimension <= 10 && minesCount >= 1 && minesCount <= maxMines)
+    if (boardDimension >= MIN_SIZE_BOARD && boardDimension <= MAX_SIZE_BOARD && minesCount >= 1 && minesCount <= maxMines)
     {
         if (boardDimension==3 && minesCount > 7)
         {
@@ -326,7 +330,7 @@ void playMinesweeper(char realBoard[10][10], char playerBoard[10][10], size_t bo
     {
         cout << "Current board status: " << endl;
         printPlayerBoard(playerBoard, boardDimension);
-        char operation[7];
+        char operation[MAX_STR_SIZE];
         int xMove, yMove;
         makeMove(xMove, yMove, operation, boardDimension);
 
@@ -377,8 +381,8 @@ int main()
     unsigned minesCount = 0;
     rules();
     customizeSettings(boardDimension, minesCount);
-    char realBoard[10][10];
-    char playerBoard[10][10];
+    char realBoard[MAX_SIZE_BOARD][MAX_SIZE_BOARD];
+    char playerBoard[MAX_SIZE_BOARD][MAX_SIZE_BOARD];
     playMinesweeper(realBoard, playerBoard, boardDimension, minesCount);
 }
 
