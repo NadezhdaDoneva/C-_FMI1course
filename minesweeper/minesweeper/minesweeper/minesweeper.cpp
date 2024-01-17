@@ -230,8 +230,8 @@ void replaceMine(const int x, const int y, char realBoard[10][10], size_t boardD
 }
 
 //open all fields next to zeroes
-void openAllNeighbours(const char realBoard[10][10], char playerBoard[10][10], const int xMove, const int yMove, size_t boardDimension) {
-    if (realBoard[xMove][yMove] != '0')
+void openAllNeighbours(const char realBoard[10][10], char playerBoard[10][10], const int xMove, const int yMove, size_t boardDimension, int& movesleft) {
+    if (realBoard[xMove][yMove] != '-')
     {
         playerBoard[xMove][yMove] == realBoard[xMove][yMove];
     }
@@ -245,10 +245,14 @@ void openAllNeighbours(const char realBoard[10][10], char playerBoard[10][10], c
                     continue;
                 }
                 else {
-                    if (playerBoard[i][j] == '-' && realBoard[i][j] != '*' && realBoard[i][j] == '0')
+                    if (playerBoard[i][j] == '-' && realBoard[i][j] != '*')
                     {
                         playerBoard[i][j] = realBoard[i][j];
-                        openAllNeighbours(realBoard, playerBoard, i, j, boardDimension);
+                        movesleft--;
+                        if (realBoard[i][j] == '0')
+                        {
+                        openAllNeighbours(realBoard, playerBoard, i, j, boardDimension, movesleft);
+                        }
                     }
                 }
             }
@@ -279,7 +283,7 @@ void openField(char realBoard[10][10], char playerBoard[10][10], const int xMove
             movesLeft--;
         }
         else {
-            openAllNeighbours(realBoard, playerBoard, xMove, yMove, boardDimension);
+            openAllNeighbours(realBoard, playerBoard, xMove, yMove, boardDimension, movesLeft);
         }
     }
 }
