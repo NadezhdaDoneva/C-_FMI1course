@@ -24,7 +24,7 @@
 using namespace std;
 
 // validate user input of dimensions and mines count
-bool validationOfInput(size_t boardDimension, unsigned minesCount) {
+bool validationOfInput(size_t boardDimension, const unsigned minesCount) {
     int maxMines = 3 * boardDimension;
     if (boardDimension >= 3 && boardDimension <= 10 && minesCount >= 1 && minesCount <= maxMines)
     {
@@ -65,7 +65,7 @@ bool isRepeatedMine(char realBoard[10][10], int x, int y, unsigned minesCount) {
     return false;
 }
 
-void countOfMinesAroundCurrField(char realBoard[10][10], size_t boardDimension, int i, int j) {
+void countOfMinesAroundCurrField(char realBoard[10][10], size_t boardDimension, const int i, const int j) {
     char countMinesAround = '0';
     for (int k = i-1; k <= i + 1; k++)
     {
@@ -121,7 +121,7 @@ void placeMinesRandomly(char realBoard[10][10], unsigned minesCount, size_t boar
     countOfminesInNeighbouringFields(realBoard, boardDimension);
 }
 
-void printPlayerBoard(char playerBoard[10][10], size_t boardDimension) {
+void printPlayerBoard(const char playerBoard[10][10], size_t boardDimension) {
     cout << " #|";
     for (size_t i = 0; i < boardDimension; i++)
     {
@@ -201,7 +201,7 @@ void makeMove(int& x, int& y, char operation[7], size_t boardDimension) {
 }
 
 //check if a field is a mine
-bool isMine(int x, int y, char realBoard[10][10], size_t boardDimension) {
+bool isMine(const int x, const int y, char realBoard[10][10], size_t boardDimension) {
     if (realBoard[x][y] == '*')
     {
         return true;
@@ -210,7 +210,7 @@ bool isMine(int x, int y, char realBoard[10][10], size_t boardDimension) {
 }
 
 // if a mine is hit on the first move we change the coordinates of the mine to the first non-mine field
-void replaceMine(int x, int y, char realBoard[10][10], size_t boardDimension) {
+void replaceMine(const int x, const int y, char realBoard[10][10], size_t boardDimension) {
     for (size_t i = 0; i < boardDimension; i++)
     {
         for (size_t j = 0; j < boardDimension; j++) {
@@ -226,7 +226,7 @@ void replaceMine(int x, int y, char realBoard[10][10], size_t boardDimension) {
 }
 
 //open all fields next to zeroes
-void openAllNeighbours(char realBoard[10][10], char playerBoard[10][10], int xMove, int yMove, size_t boardDimension) {
+void openAllNeighbours(const char realBoard[10][10], char playerBoard[10][10], const int xMove, const int yMove, size_t boardDimension) {
     if (realBoard[xMove][yMove] != '0')
     {
         playerBoard[xMove][yMove] == realBoard[xMove][yMove];
@@ -253,7 +253,7 @@ void openAllNeighbours(char realBoard[10][10], char playerBoard[10][10], int xMo
 }
 
 //open field functionality
-void openField(char realBoard[10][10], char playerBoard[10][10], int xMove, int yMove, bool& gameOver, size_t boardDimension, int& movesLeft) {
+void openField(char realBoard[10][10], char playerBoard[10][10], const int xMove, const int yMove, bool& gameOver, size_t boardDimension, int& movesLeft) {
     if (playerBoard[xMove][yMove] == '?')
     {
         cout << "The field is marked! Unmark before opening it. " << endl;
@@ -281,7 +281,7 @@ void openField(char realBoard[10][10], char playerBoard[10][10], int xMove, int 
 }
 
 //mark field functionality
-void markField(char playerBoard[10][10], int xMove, int yMove) {
+void markField(char playerBoard[10][10], const int xMove, const int yMove) {
     //check if already marked
     if (playerBoard[xMove][yMove] == '?')
     {
@@ -299,7 +299,7 @@ void markField(char playerBoard[10][10], int xMove, int yMove) {
 }
 
 //unmark field functionality
-void unmarkField(char playerBoard[10][10], int xMove, int yMove) {
+void unmarkField(char playerBoard[10][10], const int xMove, const int yMove) {
     //check if it is already opened
     if (playerBoard[xMove][yMove] != '-' && playerBoard[xMove][yMove] != '?')
     {
