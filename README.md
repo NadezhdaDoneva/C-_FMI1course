@@ -1,6 +1,6 @@
 <b> SOFIA UNIVERSITY SOFTWARE ENGENEERING </b>
 
-Here I`ve upploaded exercises from the "Introduction into programming" course.
+Here I`ve upploaded exercises from the <b>"Introduction into programming"</b> course.
 
 The course project is the <b>Minesweeper</b> game.
 <br>
