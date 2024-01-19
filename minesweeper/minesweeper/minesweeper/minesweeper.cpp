@@ -162,7 +162,7 @@ void createBoard(char realBoard[10][10], char playerBoard[10][10], size_t boardD
     placeMinesRandomly(realBoard, minesCount, boardDimension);
 
     //IF YOU WANT TO CHEAT AND SEE THE REAL BOARD IN THE BEGINNING UNCOMMENT THIS LINE:
-    printPlayerBoard(realBoard, boardDimension);
+    /*printPlayerBoard(realBoard, boardDimension);*/
 }
 
 //check if two strings are equal
