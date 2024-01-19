@@ -162,7 +162,7 @@ void createBoard(char realBoard[10][10], char playerBoard[10][10], size_t boardD
     placeMinesRandomly(realBoard, minesCount, boardDimension);
 
     //IF YOU WANT TO CHEAT AND SEE THE REAL BOARD IN THE BEGINNING UNCOMMENT THIS LINE:
-    /*printPlayerBoard(realBoard, boardDimension);*/
+    printPlayerBoard(realBoard, boardDimension);
 }
 
 //check if two strings are equal
@@ -186,7 +186,7 @@ int strCompare(const char* first, const char* second)
 
 //user input checked if valid
 bool areValidInputCoordinatesAndOperation(int const x, int const y, char const operation[7], size_t boardDimension) {
-    if (x >= 0 && x <= boardDimension && y >= 0 && y <= boardDimension 
+    if (x >= 0 && x < boardDimension && y >= 0 && y < boardDimension 
         && (strCompare(operation, "open") == 0 || strCompare(operation, "mark") == 0 || strCompare(operation, "unmark") == 0))
     {
         return true;
@@ -290,7 +290,7 @@ void openField(char realBoard[10][10], char playerBoard[10][10], const int xMove
 }
 
 //mark field functionality
-void markField(char playerBoard[10][10], const int xMove, const int yMove, unsigned& minesCount) {
+void markField(char playerBoard[10][10], char realBoard[10][10], const int xMove, const int yMove, unsigned& minesCount, size_t boardDimension) {
     //check if already marked
     if (playerBoard[xMove][yMove] == '?')
     {
@@ -304,12 +304,15 @@ void markField(char playerBoard[10][10], const int xMove, const int yMove, unsig
     //otherwise mark field, decrement minesCount
     else {
         playerBoard[xMove][yMove] = '?';
-        minesCount--;
+        if (realBoard[xMove][yMove] == '*')
+        {
+            minesCount--;
+        }
     }
 }
 
 //unmark field functionality
-void unmarkField(char playerBoard[10][10], const int xMove, const int yMove, unsigned& minesCount) {
+void unmarkField(char playerBoard[10][10], char realBoard[10][10], const int xMove, const int yMove, unsigned& minesCount) {
     //check if it is already opened
     if (playerBoard[xMove][yMove] != '-' && playerBoard[xMove][yMove] != '?')
     {
@@ -323,7 +326,10 @@ void unmarkField(char playerBoard[10][10], const int xMove, const int yMove, uns
     //otherwise unmark, increment minesCount
     else {
         playerBoard[xMove][yMove] = '-';
-        minesCount++;
+        if (realBoard[xMove][yMove] == '*')
+        {
+            minesCount++;
+        }
     }
 }
 
@@ -341,11 +347,11 @@ void playMinesweeper(char realBoard[10][10], char playerBoard[10][10], size_t bo
         int xMove, yMove;
         makeMove(xMove, yMove, operation, boardDimension);
 
-        //if it`s the first move, player should never lose, so if he hits a mine, we move the mine somewhere else and 
+        //if it`s the first move and it`s "open", player should never lose, so if he hits a mine, we move the mine somewhere else and 
         //again count the mines around every field
         if (currentMove == 0)
         {
-            if (isMine(xMove, yMove, realBoard, boardDimension)) {
+            if (isMine(xMove, yMove, realBoard, boardDimension) && (strCompare(operation, "open") == 0)) {
                 replaceMine(xMove, yMove, realBoard, boardDimension);
                 countOfminesInNeighbouringFields(realBoard, boardDimension);
             }
@@ -357,10 +363,10 @@ void playMinesweeper(char realBoard[10][10], char playerBoard[10][10], size_t bo
             openField(realBoard, playerBoard, xMove, yMove, gameOver, boardDimension, movesLeft);
         }
         else if(strCompare(operation, "mark") == 0) {
-            markField(playerBoard, xMove, yMove, minesCount);
+            markField(playerBoard, realBoard, xMove, yMove, minesCount, boardDimension);
         }
         else if (strCompare(operation, "unmark") == 0) {
-            unmarkField(playerBoard, xMove, yMove, minesCount);
+            unmarkField(playerBoard, realBoard, xMove, yMove, minesCount);
         }
 
         // Victory:
