@@ -14,10 +14,10 @@ Minesweeper is a game where mines are hidden in a grid of squares. Safe squares 
 <br>
 Instructions how to use the program:
 <br>
- Firstly, you should enter the board dimensions (min size 3 and max size 10) and the number of mines (max 3 * board dimension)
+ Firstly, you should enter the board dimensions (min size 3 and max size 10) and the number of mines you want to play with(max 3 * board dimension)
  <br>
- After you should start entering your turns in this pattern: <operation> <xCoordinate> <yCoordinate>
+ After, you should start entering your turns in this pattern: <operation> <xCoordinate> <yCoordinate>
  <br>
- The valid operation commands are "open", "mark", "unmark"
+ The valid operation commands are "open", "mark" and "unmark"
  <br>
  Enjoy and be careful not to hit a mine :) 
