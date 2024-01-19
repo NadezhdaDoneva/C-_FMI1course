@@ -160,8 +160,9 @@ void createBoard(char realBoard[10][10], char playerBoard[10][10], size_t boardD
         }
     }
     placeMinesRandomly(realBoard, minesCount, boardDimension);
-    //DELETE:
-    printPlayerBoard(realBoard, boardDimension);
+
+    //IF YOU WANT TO CHEAT AND SEE THE REAL BOARD IN THE BEGINNING UNCOMMENT THIS LINE:
+    /*printPlayerBoard(realBoard, boardDimension);*/
 }
 
 //check if two strings are equal
@@ -289,7 +290,7 @@ void openField(char realBoard[10][10], char playerBoard[10][10], const int xMove
 }
 
 //mark field functionality
-void markField(char playerBoard[10][10], const int xMove, const int yMove) {
+void markField(char playerBoard[10][10], const int xMove, const int yMove, unsigned& minesCount) {
     //check if already marked
     if (playerBoard[xMove][yMove] == '?')
     {
@@ -300,14 +301,15 @@ void markField(char playerBoard[10][10], const int xMove, const int yMove) {
     {
         cout << "This field has been opened." << endl;
     }
-    //otherwise mark field
+    //otherwise mark field, decrement minesCount
     else {
         playerBoard[xMove][yMove] = '?';
+        minesCount--;
     }
 }
 
 //unmark field functionality
-void unmarkField(char playerBoard[10][10], const int xMove, const int yMove) {
+void unmarkField(char playerBoard[10][10], const int xMove, const int yMove, unsigned& minesCount) {
     //check if it is already opened
     if (playerBoard[xMove][yMove] != '-' && playerBoard[xMove][yMove] != '?')
     {
@@ -318,9 +320,10 @@ void unmarkField(char playerBoard[10][10], const int xMove, const int yMove) {
     {
         cout << "You can`t unmark a field, which has not been marked first." << endl;
     }
-    //otherwise unmark
+    //otherwise unmark, increment minesCount
     else {
         playerBoard[xMove][yMove] = '-';
+        minesCount++;
     }
 }
 
@@ -354,15 +357,17 @@ void playMinesweeper(char realBoard[10][10], char playerBoard[10][10], size_t bo
             openField(realBoard, playerBoard, xMove, yMove, gameOver, boardDimension, movesLeft);
         }
         else if(strCompare(operation, "mark") == 0) {
-            markField(playerBoard, xMove, yMove);
+            markField(playerBoard, xMove, yMove, minesCount);
         }
         else if (strCompare(operation, "unmark") == 0) {
-            unmarkField(playerBoard, xMove, yMove);
+            unmarkField(playerBoard, xMove, yMove, minesCount);
         }
 
-        if (!gameOver && (movesLeft == 0))
+        // Victory:
+        if (!gameOver && (movesLeft == 0) || !gameOver && (minesCount == 0))
         {
-            cout << "VICTORY!";
+            cout << "VICTORY!" << endl;
+            printPlayerBoard(realBoard, boardDimension);
             gameOver = true;
         }
     }
@@ -371,6 +376,7 @@ void playMinesweeper(char realBoard[10][10], char playerBoard[10][10], size_t bo
 
 void rules() {
     cout << "RULES:" << endl << endl;
+    cout << "0. If you want to cheat and see the board in the beginning uncomment line 165";
     cout << "1. Firstly, the player should enter the board DIMENSIONS and the COUNT of all MINES." << endl;
     cout << "2. The game starts and the player should enter a command OPEN, MARK, UNMARK and COORDINATES of a cell." << endl;
     cout << "3. If the player hits a mine - he loses the game." << endl;
