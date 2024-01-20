@@ -61,7 +61,7 @@ void customizeSettings(size_t& boardDimension, unsigned& minesCount) {
 }
 
 //check if mine with the same coordinates is already generated during random generation
-bool isRepeatedMine(char realBoard[10][10], int x, int y, unsigned minesCount) {
+bool isRepeatedMine(char realBoard[MAX_SIZE_BOARD][MAX_SIZE_BOARD], int x, int y, unsigned minesCount) {
         if (realBoard[x][y] == '*')
         {
             return true;
@@ -69,7 +69,7 @@ bool isRepeatedMine(char realBoard[10][10], int x, int y, unsigned minesCount) {
     return false;
 }
 
-void countOfMinesAroundCurrField(char realBoard[10][10], size_t boardDimension, const int i, const int j) {
+void countOfMinesAroundCurrField(char realBoard[MAX_SIZE_BOARD][MAX_SIZE_BOARD], size_t boardDimension, const int i, const int j) {
     char countMinesAround = '0';
     for (int k = i-1; k <= i + 1; k++)
     {
@@ -92,7 +92,7 @@ void countOfMinesAroundCurrField(char realBoard[10][10], size_t boardDimension, 
     realBoard[i][j] = countMinesAround;
 }
 
-void countOfminesInNeighbouringFields(char realBoard[10][10], size_t boardDimension) {
+void countOfminesInNeighbouringFields(char realBoard[MAX_SIZE_BOARD][MAX_SIZE_BOARD], size_t boardDimension) {
     for (int i = 0; i < boardDimension; i++)
     {
         for (int j = 0; j < boardDimension; j++)
@@ -105,7 +105,7 @@ void countOfminesInNeighbouringFields(char realBoard[10][10], size_t boardDimens
 }
 
 //place mines on random coordinates
-void placeMinesRandomly(char realBoard[10][10], unsigned minesCount, size_t boardDimension) {
+void placeMinesRandomly(char realBoard[MAX_SIZE_BOARD][MAX_SIZE_BOARD], unsigned minesCount, size_t boardDimension) {
     srand(time(0));
     int x = 0;
     int y = 0;
@@ -125,7 +125,7 @@ void placeMinesRandomly(char realBoard[10][10], unsigned minesCount, size_t boar
     countOfminesInNeighbouringFields(realBoard, boardDimension);
 }
 
-void printPlayerBoard(const char playerBoard[10][10], size_t boardDimension) {
+void printPlayerBoard(const char playerBoard[MAX_SIZE_BOARD][MAX_SIZE_BOARD], size_t boardDimension) {
     cout << " #|";
     for (size_t i = 0; i < boardDimension; i++)
     {
@@ -150,7 +150,7 @@ void printPlayerBoard(const char playerBoard[10][10], size_t boardDimension) {
 }
 
 //creates realBoard (ivisible board witch holds all the info) and playerBoard (the board with witch the player communicates with)
-void createBoard(char realBoard[10][10], char playerBoard[10][10], size_t boardDimension, unsigned minesCount) {
+void createBoard(char realBoard[MAX_SIZE_BOARD][MAX_SIZE_BOARD], char playerBoard[MAX_SIZE_BOARD][MAX_SIZE_BOARD], size_t boardDimension, unsigned minesCount) {
     for (int i = 0; i < boardDimension; i++)
     {
         for (int j = 0; j < boardDimension; j++)
@@ -162,7 +162,7 @@ void createBoard(char realBoard[10][10], char playerBoard[10][10], size_t boardD
     placeMinesRandomly(realBoard, minesCount, boardDimension);
 
     //IF YOU WANT TO CHEAT AND SEE THE REAL BOARD IN THE BEGINNING UNCOMMENT THIS LINE:
-    /*printPlayerBoard(realBoard, boardDimension);*/
+    printPlayerBoard(realBoard, boardDimension);
 }
 
 //check if two strings are equal
@@ -185,7 +185,7 @@ int strCompare(const char* first, const char* second)
 }
 
 //user input checked if valid
-bool areValidInputCoordinatesAndOperation(int const x, int const y, char const operation[7], size_t boardDimension) {
+bool areValidInputCoordinatesAndOperation(int const x, int const y, char const operation[MAX_STR_SIZE], size_t boardDimension) {
     if (x >= 0 && x < boardDimension && y >= 0 && y < boardDimension 
         && (strCompare(operation, "open") == 0 || strCompare(operation, "mark") == 0 || strCompare(operation, "unmark") == 0))
     {
@@ -206,7 +206,7 @@ void makeMove(int& x, int& y, char operation[7], size_t boardDimension) {
 }
 
 //check if a field is a mine
-bool isMine(const int x, const int y, char realBoard[10][10], size_t boardDimension) {
+bool isMine(const int x, const int y, char realBoard[MAX_SIZE_BOARD][MAX_SIZE_BOARD], size_t boardDimension) {
     if (realBoard[x][y] == '*')
     {
         return true;
@@ -215,7 +215,7 @@ bool isMine(const int x, const int y, char realBoard[10][10], size_t boardDimens
 }
 
 // if a mine is hit on the first move we change the coordinates of the mine to the first non-mine field
-void replaceMine(const int x, const int y, char realBoard[10][10], size_t boardDimension) {
+void replaceMine(const int x, const int y, char realBoard[MAX_SIZE_BOARD][MAX_SIZE_BOARD], size_t boardDimension) {
     for (size_t i = 0; i < boardDimension; i++)
     {
         for (size_t j = 0; j < boardDimension; j++) {
@@ -231,7 +231,7 @@ void replaceMine(const int x, const int y, char realBoard[10][10], size_t boardD
 }
 
 //open all fields next to zeroes
-void openAllNeighbours(const char realBoard[10][10], char playerBoard[10][10], const int xMove, const int yMove, size_t boardDimension, int& movesleft) {
+void openAllNeighbours(const char realBoard[MAX_SIZE_BOARD][MAX_SIZE_BOARD], char playerBoard[MAX_SIZE_BOARD][MAX_SIZE_BOARD], const int xMove, const int yMove, size_t boardDimension, int& movesleft) {
     if (realBoard[xMove][yMove] != '-')
     {
         playerBoard[xMove][yMove] == realBoard[xMove][yMove];
@@ -262,7 +262,7 @@ void openAllNeighbours(const char realBoard[10][10], char playerBoard[10][10], c
 }
 
 //open field functionality
-void openField(char realBoard[10][10], char playerBoard[10][10], const int xMove, const int yMove, bool& gameOver, size_t boardDimension, int& movesLeft) {
+void openField(char realBoard[MAX_SIZE_BOARD][MAX_SIZE_BOARD], char playerBoard[MAX_SIZE_BOARD][MAX_SIZE_BOARD], const int xMove, const int yMove, bool& gameOver, size_t boardDimension, int& movesLeft) {
     if (playerBoard[xMove][yMove] == '?')
     {
         cout << "The field is marked! Unmark before opening it. " << endl;
@@ -290,7 +290,7 @@ void openField(char realBoard[10][10], char playerBoard[10][10], const int xMove
 }
 
 //mark field functionality
-void markField(char playerBoard[10][10], char realBoard[10][10], const int xMove, const int yMove, unsigned& minesCount, size_t boardDimension) {
+void markField(char playerBoard[MAX_SIZE_BOARD][MAX_SIZE_BOARD], char realBoard[MAX_SIZE_BOARD][MAX_SIZE_BOARD], const int xMove, const int yMove, unsigned& minesCount, size_t boardDimension) {
     //check if already marked
     if (playerBoard[xMove][yMove] == '?')
     {
@@ -312,7 +312,7 @@ void markField(char playerBoard[10][10], char realBoard[10][10], const int xMove
 }
 
 //unmark field functionality
-void unmarkField(char playerBoard[10][10], char realBoard[10][10], const int xMove, const int yMove, unsigned& minesCount) {
+void unmarkField(char playerBoard[MAX_SIZE_BOARD][MAX_SIZE_BOARD], char realBoard[MAX_SIZE_BOARD][MAX_SIZE_BOARD], const int xMove, const int yMove, unsigned& minesCount) {
     //check if it is already opened
     if (playerBoard[xMove][yMove] != '-' && playerBoard[xMove][yMove] != '?')
     {
@@ -333,7 +333,7 @@ void unmarkField(char playerBoard[10][10], char realBoard[10][10], const int xMo
     }
 }
 
-void playMinesweeper(char realBoard[10][10], char playerBoard[10][10], size_t boardDimension, unsigned minesCount) {
+void playMinesweeper(char realBoard[MAX_SIZE_BOARD][MAX_SIZE_BOARD], char playerBoard[MAX_SIZE_BOARD][MAX_SIZE_BOARD], size_t boardDimension, unsigned minesCount) {
     int movesLeft = boardDimension * boardDimension - minesCount;
     createBoard(realBoard, playerBoard, boardDimension, minesCount);
     bool gameOver = false;
