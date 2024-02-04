@@ -149,7 +149,7 @@ void printPlayerBoard(const char playerBoard[MAX_SIZE_BOARD][MAX_SIZE_BOARD], si
     cout << endl;
 }
 
-//creates realBoard (ivisible board witch holds all the info) and playerBoard (the board with witch the player communicates with)
+//creates realBoard (ivisible board witch holds all the info) and playerBoard (the board with witch the player communicates)
 void createBoard(char realBoard[MAX_SIZE_BOARD][MAX_SIZE_BOARD], char playerBoard[MAX_SIZE_BOARD][MAX_SIZE_BOARD], size_t boardDimension, unsigned minesCount) {
     for (int i = 0; i < boardDimension; i++)
     {
@@ -207,11 +207,7 @@ void makeMove(int& x, int& y, char operation[7], size_t boardDimension) {
 
 //check if a field is a mine
 bool isMine(const int x, const int y, char realBoard[MAX_SIZE_BOARD][MAX_SIZE_BOARD], size_t boardDimension) {
-    if (realBoard[x][y] == '*')
-    {
-        return true;
-    }
-    return false;
+    return realBoard[x][y] == '*';
 }
 
 // if a mine is hit on the first move we change the coordinates of the mine to the first non-mine field
@@ -314,7 +310,7 @@ void markField(char playerBoard[MAX_SIZE_BOARD][MAX_SIZE_BOARD], char realBoard[
 //unmark field functionality
 void unmarkField(char playerBoard[MAX_SIZE_BOARD][MAX_SIZE_BOARD], char realBoard[MAX_SIZE_BOARD][MAX_SIZE_BOARD], const int xMove, const int yMove, unsigned& minesCount) {
     //check if it is already opened
-    if (playerBoard[xMove][yMove] != '-' && playerBoard[xMove][yMove] != '?')
+    if (playerBoard[xMove][yMove] != '-' && playerBoard[xMove][yMove] != 'm')
     {
         cout << "You can`t unmark already opened field." << endl;
     }
