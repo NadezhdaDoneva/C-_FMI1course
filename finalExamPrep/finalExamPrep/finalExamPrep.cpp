@@ -5,7 +5,7 @@
 using namespace std;
 
 ////STRINGS FUNCTIONS
-size_t strLen(char str[]) {
+size_t strLen(const char str[]) {
     if (!str)
     {
         return 0;
@@ -297,63 +297,63 @@ void getLowerAndUpperCount(const char* str, int& lowerCount, int& capitalCount) 
 
 
 
-bool isPrefix(const char* text, const char* pattern) {
-	if (!*pattern)
-	{
-		return true;
-	}
-	return *text == *pattern && isPrefix(text + 1, pattern + 1);
-}
+//bool isPrefix(const char* text, const char* pattern) {
+//	if (!*pattern)
+//	{
+//		return true;
+//	}
+//	return *text == *pattern && isPrefix(text + 1, pattern + 1);
+//}
 
-bool findInTextRec(const char* text, size_t textLen, const char* pattern, size_t patternLen) {
-	if (patternLen > textLen)
-		return false;
+//bool findInTextRec(const char* text, size_t textLen, const char* pattern, size_t patternLen) {
+//	if (patternLen > textLen)
+//		return false;
+//
+//	return isPrefix(text, pattern) || findInTextRec(text + 1, textLen - 1, pattern, patternLen);
+//}
 
-	return isPrefix(text, pattern) || findInTextRec(text + 1, textLen - 1, pattern, patternLen);
-}
-
-bool findInText(const char* text, const char* pattern)
-{
-	return findInTextRec(text, strlen(text), pattern, strlen(pattern));
-}
-
-bool isDigit(char ch)
-{
-	return ch >= '0' && ch <= '9';
-}
-
-int getSumOfNumbersInStr(const char* str, int currAccNum = 0, int globalSum = 0) {
-	if (!*str)
-	{
-		globalSum += currAccNum;
-		return globalSum;
-	}
-
-	if (isDigit(*str))
-	{
-		currAccNum = currAccNum * 10 + (*str - '0');
-	}
-	else {
-		globalSum += currAccNum;
-		currAccNum = 0;
-	}
-	return getSumOfNumbersInStr(str + 1, currAccNum, globalSum);
-}
-
-void genBoolVectors(bool* arr, size_t size, unsigned beginIndex = 0)
-{
-	if (beginIndex == size)
-	{
-		for (int i = 0; i < size; i++)
-			cout << arr[i] << " ";
-		cout << endl;
-		return;
-	}
-	arr[beginIndex] = 0;
-	genBoolVectors(arr, size, beginIndex + 1);
-	arr[beginIndex] = 1;
-	genBoolVectors(arr, size, beginIndex + 1);
-}
+//bool findInText(const char* text, const char* pattern)
+//{
+//	return findInTextRec(text, strlen(text), pattern, strlen(pattern));
+//}
+//
+//bool isDigit(char ch)
+//{
+//	return ch >= '0' && ch <= '9';
+//}
+//
+//int getSumOfNumbersInStr(const char* str, int currAccNum = 0, int globalSum = 0) {
+//	if (!*str)
+//	{
+//		globalSum += currAccNum;
+//		return globalSum;
+//	}
+//
+//	if (isDigit(*str))
+//	{
+//		currAccNum = currAccNum * 10 + (*str - '0');
+//	}
+//	else {
+//		globalSum += currAccNum;
+//		currAccNum = 0;
+//	}
+//	return getSumOfNumbersInStr(str + 1, currAccNum, globalSum);
+//}
+//
+//void genBoolVectors(bool* arr, size_t size, unsigned beginIndex = 0)
+//{
+//	if (beginIndex == size)
+//	{
+//		for (int i = 0; i < size; i++)
+//			cout << arr[i] << " ";
+//		cout << endl;
+//		return;
+//	}
+//	arr[beginIndex] = 0;
+//	genBoolVectors(arr, size, beginIndex + 1);
+//	arr[beginIndex] = 1;
+//	genBoolVectors(arr, size, beginIndex + 1);
+//}
 
 //1zad
 //bool containsInArr(char ch, char arr[], int size) {
@@ -557,7 +557,203 @@ void genBoolVectors(bool* arr, size_t size, unsigned beginIndex = 0)
 //	return newNum;
 //}
 
+//int gcd(int a, int b)
+//{
+//	if (a < b)
+//	{
+//		int temp = a;
+//		a = b;
+//		b = temp;
+//	}
+//	while (b != 0)
+//	{
+//		int temp = a % b;
+//		a = b;
+//		b = temp;
+//	}
+//	return a;
+//}
+
+//0001
+//unsigned int fromBinaryToDecimal(unsigned int n)
+//{
+//	unsigned int result = 0;
+//	unsigned int mult = 1; //2^0
+//	while (n != 0)
+//	{
+//		result += ((n % 10) * mult);
+//		mult *= 2;
+//		n /= 10;
+//	}
+//	return result;
+//}
+//
+//
+//unsigned int toBinaryFromDecimal(unsigned int n) {
+//	int res = 0;
+//	int mult = 1;
+//	while (n != 0) {
+//		if (n % 2 == 1)
+//		{
+//			res += mult;
+//		}
+//		n /= 2;
+//		mult *= 10;
+//	}
+//	return res;
+//}
+
+
+
+//from decimal to random
+void print(int arr[], size_t size)
+{
+	for (size_t i = 0; i < size; i++)
+		cout << arr[i] << " ";
+	cout << endl;
+}
+//
+//char getSymbolFromIndex(int cur) {
+//	if (cur <= 9 && cur >= 0)
+//		return cur + '0';
+//	if (cur >= 10)
+//	{
+//		return cur - 10 + 'A';
+//	}
+//}
+//
+//////reversed for loop, module division and transfroming the reminder to symbol, setting it in the new arr
+//void fromDecimalToRandom(unsigned n, char to[], size_t size, unsigned k) {
+//	for (int i = size - 1 ; i >= 0; i--)
+//	{
+//		int cur = n % k;
+//		char curCh = getSymbolFromIndex(cur);
+//		to[i] = curCh;
+//		n /= k;
+//	}
+//}
+
+//from random to decimal
+//int getIndexOfSymbol(char ch)
+//{
+//	if (ch >= '0' && ch <= '9')
+//		return ch - '0';
+//	else if (ch >= 'A' && ch <= 'Z')
+//		return 10 + (ch - 'A');
+//	else
+//		return -1;
+//}
+//
+//unsigned int fromRandomToDecimal(const char from[], size_t size, unsigned k)
+//{
+//	int result = 0;
+//
+//	for (int i = size - 1, mult = 1; i >= 0; i--, mult *= k) //we declare both the array iter (variable i) and mult in the loop
+//		result += getIndexOfSymbol(from[i]) * mult;
+//	return result;
+//}
+
+
+//int getMissing(const int arr[], size_t size)
+//{
+//	int result = 0;
+//	for (unsigned i = 0; i < size; i++)
+//		result ^= arr[i];
+//	return result;
+//}
+
+//bool isPrefix(char* str, char* pattern) {
+//	while (*str && *pattern)
+//	{
+//		if (*str != *pattern)
+//			return false;
+//		str += 1;
+//		pattern += 1;
+//	}
+//	return *pattern == '\0';
+//}
+//
+//bool searchInText(char* str, char* pattern) {
+//	int strLength = strLen(str);
+//	int patternLen = strLen(pattern);
+//
+//	while (patternLen < strLength) {
+//		if (isPrefix(str, pattern))
+//		{
+//			return true;
+//		}
+//		str += 1;
+//		strLength--;
+//	}
+//	return false;
+//}
+
+//selection sort
+//
+//void selectionSort(int* arr, size_t size) {
+//	for (size_t i = 0; i < size; i++)
+//	{
+//		int minElIdx = i;
+//		for (size_t j = i + 1; j < size; j++)
+//		{
+//			if (arr[j] < arr[minElIdx]) {
+//				minElIdx = j;
+//			}
+//		}
+//		if (minElIdx != i)
+//		{
+//			swapNums(arr[i], arr[minElIdx]);
+//		}
+//	}
+//}
+
+
+//void selectionSort(int* arr, size_t size) {
+//	for (size_t i = 0; i < size; i++)
+//	{
+//		int minELIdx = i;
+//		for (size_t j = i+1; j < size; j++)
+//		{
+//			if (arr[j] < arr[minELIdx]) {
+//				j = minELIdx;
+//			}
+//		}
+//		if (minELIdx != i)
+//		{
+//			swapNums(arr[i], arr[minELIdx]);
+//		}
+//	}
+//}
+
+bool isPrefix(const char* symbols, const char* word, int i, int len) {
+	int wordLen = strLen(word);
+	while (wordLen < len) {
+		if (symbols[i] != *word)
+		{
+			return false;
+		}
+		i--;
+		word++;
+		len--;
+	}
+	return *word == '\0';
+}
+
+//check if "word" is contained in "symbols" reversed
+bool doExist(const char* symbols, const char* word) {
+	int len = strLen(symbols);
+
+	for (int i = len - 1; i >= 0 ; i--)
+	{
+		if (isPrefix(symbols, word, i, len)) {
+			return true;
+		}
+	}
+	return false;
+}
+
 void main() {
+	cout << doExist("hko", "hl");
 	//cout << fact(5) << endl;
 	//cout << fibb(5) << endl;
 	//int arr[] = { 1,2,3,4,5 };
@@ -604,5 +800,48 @@ void main() {
 	/*unsigned short int n = 1;
 	cout << reverseBitwise(n);*/
 
+	/*cout << gcd(4, 10);*/
+	/*cout << fromBinaryToDecimal(10) << endl;
+	cout << toBinaryFromDecimal(55) << endl;*/
 
+	//constexpr int SIZE = 5;
+	//char to[SIZE] = {};
+	////fromDecimalToRandom(1234, to, SIZE, 16); //124 in decimal to hex;
+	////print(to, SIZE);
+
+	//char from[] = { '0', 'A', 'A','B', '3' };
+	//unsigned n = fromRandomToDecimal(from, SIZE, 16); //AAB3 in hex to decimal;
+	//cout << n << std::endl;;
+
+	/*constexpr size_t size = 7;
+	int arr[] = { 5, 1, 5, 6, 1, 7, 6 };
+	cout << getMissing(arr, 7);*/
+
+	/*char str[] = "hello guyss!";
+	char pattern[] = "guys";
+	cout << searchInText(str, pattern);*/
+
+	//constexpr size_t SIZE = 5;
+	//int arr[SIZE] = { 5,4,3,2,1 };
+	//selectionSort(arr, SIZE);
+	//print(arr, SIZE);
+
+	//dynamic matrix
+	//int rows, cols;
+	//cin >> rows >> cols;
+	//int** matrix = new int*[rows];
+	//for (size_t i = 0; i < rows; i++)
+	//{
+	//	matrix[i] = new int[cols];
+	//	for (size_t j = 0; j < cols; j++)
+	//	{
+	//		cin >> matrix[i][j];
+	//	}
+	//}
+	////delete
+	//for (int i = 0; i < rows; i++)
+	//{
+	//	delete[] matrix[i];
+	//}
+	//delete[] matrix;
 }
