@@ -753,7 +753,16 @@ bool doExist(const char* symbols, const char* word) {
 }
 
 void main() {
-	cout << doExist("hko", "hl");
+
+
+	double data[3][4] = { { 10., 11., 12., 13. },
+{ 20., 21., 22., 23. },
+{ 30., 31., 32., 33. } };
+	cout << data[9] << endl;
+	cout << *data[9] << endl;
+	cout << **data + 9 << endl;
+	cout << *(*data + 9) << endl;
+
 	//cout << fact(5) << endl;
 	//cout << fibb(5) << endl;
 	//int arr[] = { 1,2,3,4,5 };

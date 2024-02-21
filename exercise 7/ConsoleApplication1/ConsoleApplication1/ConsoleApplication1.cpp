@@ -23,15 +23,15 @@ int size(char buffer[]) {
 
 //hello
 //zad1
-bool isPolyndrom(char buffer[], int sizeOfStr){
-    for (int i = 0; i < sizeOfStr; i++)
-    {
-        if (buffer[i] != buffer[sizeOfStr - i - 1]) {
-            return false;
-        }
-        return true;
-    }
-}
+//bool isPolyndrom(char buffer[], int sizeOfStr){
+//    for (int i = 0; i < sizeOfStr; i++)
+//    {
+//        if (buffer[i] != buffer[sizeOfStr - i - 1]) {
+//            return false;
+//        }
+//        return true;
+//    }
+//}
 
 //zad2
 void countOfPunctuationMarks(char buffer[], int sizeOfStr) {
@@ -193,9 +193,70 @@ void beginAndEnd(char buffer[], int sizeOfStr) {
     }
 }
 
+int myStrcmp(const char* first, const char* second)
+{
+    if (!first || !second)
+        return 0; //some error value
+
+    //we skip the common prefix, but not the terminating zero!
+    while ((*first) && (*second) && ((*first) == (*second))) //acutally the (*second) check can be missed here.
+    {
+        first++;
+        second++;
+    }
+
+    return (*first - *second);
+
+}
+
+unsigned int strLen(char* str) {
+    unsigned int len = 0;
+    if (!str)
+        return 0;
+
+    while (*str) {
+        len++;
+        str++;
+    }
+    return len;
+}
+
+bool strCompare(char* str, char* pattern) {
+    if (!str || !pattern)
+    {
+        return 0;
+    }
+
+    while (*str && *pattern)
+    {
+        if (*str != *pattern)
+            return false;
+        else {
+            pattern++;
+            str++;
+        }
+
+    }
+    if (!*str && !*pattern)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
 
 int main()
 {
+    char buffer[10];
+    cin.getline(buffer, 10);
+    char buffer2[10];
+    cin.getline(buffer2, 10);
+    if (strCompare(buffer, buffer2))
+        cout << "Yes";
+    else
+        cout << "No";
     //SEMINAR
     //pr1
     /*int *ptr;
